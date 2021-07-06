@@ -2,6 +2,13 @@ import React from "react"
 import "./Kennel.css"
 import { AnimalCard } from "./animal/AnimalCard"
 import "./animal/Animal.css"
+import { EmployeeCard } from "./employee/EmployeeCard"
+import "./employee/Employee.css"
+import { LocationCard } from "./location/LocationCard"
+import "./location/Location.css"
+import { CustomerCard } from "./customer/CustomerCard"
+import "./customer/Customer.css"
+
 
 //Look carefully at the <article> tag. In React, we add classes to a component with `className` instead of `class`.
 export const Kennel = () => (
@@ -19,6 +26,25 @@ export const Kennel = () => (
             <AnimalCard />
             <AnimalCard />
             <AnimalCard />
+        </article>
+
+        <h2>Employees</h2>
+        <article className= "employees">
+            <EmployeeCard />
+            <EmployeeCard />
+            <EmployeeCard />
+        </article>
+        <h2>Locations</h2>
+        <article className= "locations">
+            <LocationCard />
+            <LocationCard />
+        </article>
+        <h2>Customers</h2>
+        <article className= "customers">
+            <CustomerCard />
+            <CustomerCard />
+            <CustomerCard />
+            <CustomerCard />
         </article>
     </>
 )
