@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-// import { LocationContext } from "../location/LocationProvider";
+import { LocationContext } from "../location/LocationProvider";
 // import { AnimalContext } from "../animal/AnimalProvider";
-// import { CustomerContext } from "../customer/CustomerProvider";
+import { CustomerContext } from "../customer/CustomerProvider";
+import { EmployeeContext } from "./EmployeeProvider";
 import "./Employee.css";
 import { useHistory } from "react-router-dom";
 
 export const EmployeeForm = () => {
     const { addEmployee } = useContext(EmployeeContext);
-    // const { locations, getLocations } = useContext(LocationContext);
-    // const { customers, getCustomers } = useContext(CustomerContext);
+    const { locations, getLocations } = useContext(LocationContext);
+    const { customers, getCustomers } = useContext(CustomerContext);
 
     /*
     With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
@@ -45,11 +46,11 @@ export const EmployeeForm = () => {
         setEmployee(newEmployee);
     };
 
-    const handleClickSaveAnimal = (event) => {
+    const handleClickSaveEmployee = (event) => {
         event.preventDefault(); //Prevents the browser from submitting the form
 
         const locationId = parseInt(employee.locationId);
-        // const customerId = parseInt(employee.customerId);
+        const customerId = parseInt(employee.customerId);
 
         if (locationId === 0 || customerId === 0) {
         window.alert("Please select a location and a customer");
@@ -136,8 +137,8 @@ export const EmployeeForm = () => {
             </select>
             </div>
         </fieldset> */}
-        <button className="btn btn-primary" onClick={handleClickSaveAnimal}>
-            Save Animal
+        <button className="btn btn-primary" onClick={handleClickSaveEmployee}>
+            Save Employee
         </button>
         </form>
     );
