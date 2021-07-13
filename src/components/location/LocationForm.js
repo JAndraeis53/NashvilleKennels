@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { LocationContext } from "../location/LocationProvider";
 // import { AnimalContext } from "../animal/AnimalProvider";
-import { CustomerContext } from "../customer/CustomerProvider";
-import { EmployeeContext } from "./EmployeeProvider";
-import "./Employee.css";
+// import { CustomerContext } from "../customer/CustomerProvider";
+import "./Location.css";
 import { useHistory } from "react-router-dom";
 
-export const EmployeeForm = () => {
-    const { addEmployee } = useContext(EmployeeContext);
-    const { locations, getLocations } = useContext(LocationContext);
-    const { customers, getCustomers } = useContext(CustomerContext);
+export const LocationForm = () => {
+    const { addLocation, getLocations } = useContext(LocationContext);
+    // const { locations, getLocations } = useContext(LocationContext);
+    // const { customers, getCustomers } = useContext(CustomerContext);
 
     /*
     With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
@@ -17,9 +16,11 @@ export const EmployeeForm = () => {
     Define the intial state of the form inputs with useState()
     */
 
-    const [employee, setEmployee] = useState({
+    const [location, setLocation] = useState({
         name: "",
-        locationId: 0
+        breed: "",
+        locationId: 0,
+        customerId: 0,
     });
 
     const history = useHistory();
@@ -29,7 +30,7 @@ export const EmployeeForm = () => {
     and locations state on initialization.
     */
     useEffect(() => {
-        getCustomers().then(getLocations);
+        getLocations();
     }, []);
 
     //when a field changes, update state. The return will re-render and display based on the values in state
@@ -37,76 +38,76 @@ export const EmployeeForm = () => {
     const handleControlledInputChange = (event) => {
         /* When changing a state object or array,
         always create a copy, make changes, and then set state.*/
-        const newEmployee = { ...employee };
-        /* Animal is an object with properties.
+        const newLocation = { ...location };
+        /* Location is an object with properties.
         Set the property to the new value
         using object bracket notation. */
-        newEmployee[event.target.id] = event.target.value;
+        newLocation[event.target.id] = event.target.value;
         // update state
-        setEmployee(newEmployee);
+        setLocation(newLocation);
     };
 
-    const handleClickSaveEmployee = (event) => {
+    const handleClickSaveLocation = (event) => {
         event.preventDefault(); //Prevents the browser from submitting the form
 
-        const locationId = parseInt(employee.locationId);
-        const customerId = parseInt(employee.customerId);
+        const locationId = parseInt(location.locationId);
+        const customerId = parseInt(location.customerId);
 
-        if (locationId === 0 || customerId === 0) {
-        window.alert("Please select a location and a customer");
-        } else {
-        //Invoke addEmployee passing the new employee object as an argument
-        //Once complete, change the url and display the employee list
+        // if (locationId === 0 || customerId === 0) {
+        // window.alert("Please select a location and a customer");
+        // } else {
+        //Invoke addLocation passing the new Location object as an argument
+        //Once complete, change the url and display the Location list
 
-        const newEmployee = {
-            name: employee.name,
-            locationId: locationId,
+        const newLocation = {
+            name: location.name,
+            address: location.address
         };
-        addEmployee(newEmployee).then(() => history.push("/employees"));
-        }
+        addLocation(newLocation).then(() => history.push("/locations"));
+        
     };
 
     return (
-        <form className="EmployeeForm">
-        <h2 className="employeeForm__title">New Employee</h2>
+        <form className="locationForm">
+        <h2 className="locationForm__title">New Location</h2>
         <fieldset>
             <div className="form-group">
-            <label htmlFor="name">Employee name:</label>
+            <label htmlFor="name">Location name:</label>
             <input
                 type="text"
                 id="name"
                 required
                 autoFocus
                 className="form-control"
-                placeholder="Employee name"
-                value={employee.name}
+                placeholder="Location name"
+                value={location.name}
+                onChange={handleControlledInputChange}
+            />
+            </div>
+        </fieldset>
+        <fieldset>
+            <div className="form-group">
+            <label htmlFor="name">Location Address:</label>
+            <input
+                type="text"
+                id="address"
+                required
+                autoFocus
+                className="form-control"
+                placeholder="Location address"
+                value={location.address}
                 onChange={handleControlledInputChange}
             />
             </div>
         </fieldset>
         {/* <fieldset>
             <div className="form-group">
-            <label htmlFor="name">Employee breed:</label>
-            <input
-                type="text"
-                id="breed"
-                required
-                autoFocus
-                className="form-control"
-                placeholder="Animal breed"
-                value={animal.breed}
-                onChange={handleControlledInputChange}
-            />
-            </div>
-        </fieldset> */}
-        <fieldset>
-            <div className="form-group">
             <label htmlFor="location">Assign to location: </label>
             <select
                 name="locationId"
                 id="locationId"
                 className="form-control"
-                value={employee.locationId}
+                value={animal.locationId}
                 onChange={handleControlledInputChange}
             >
                 <option value="0">Select a location</option>
@@ -118,7 +119,7 @@ export const EmployeeForm = () => {
             </select>
             </div>
         </fieldset>
-        {/* <fieldset>
+        <fieldset>
             <div className="form-group">
             <label htmlFor="customerId">Customer: </label>
             <select
@@ -137,8 +138,8 @@ export const EmployeeForm = () => {
             </select>
             </div>
         </fieldset> */}
-        <button className="btn btn-primary" onClick={handleClickSaveEmployee}>
-            Save Employee
+        <button className="btn btn-primary" onClick={handleClickSaveLocation}>
+            Save Location
         </button>
         </form>
     );
