@@ -10,25 +10,40 @@ export const EmployeeList = () => {
     const history = useHistory()
     //useEffect - reach out to the world for something
     useEffect(() => {
-        console.log("EmployeeList: useEffect - getEmployees")
+        // console.log("EmployeeList: useEffect - getEmployees")
         getEmployees()
 
     }, [])
 
-
     return (
-        <div className="employees">
-        {console.log("EmployeeList: Render", employees)}
-        <h2>Employees</h2>
-            <button onClick={() => {history.push("/employees/create")}}>
-                Add Employee
+        <>
+            <h1>Employees</h1>
+
+            <button onClick={() => history.push("/employees/create")}>
+            Add Employee
             </button>
-        {
-            employees.map(employee => {
-            return <EmployeeCard key={employee.id} employee={employee} />
-            })
-        }
-        </div>
-    )
+            <div className="employees">
+            {
+                employees.map(employee => {
+                return <EmployeeCard key={employee.id} employee={employee} />
+                })
+            }
+            </div>
+        </>
+        )
+    // return (
+    //     <div className="employees">
+    //     {console.log("EmployeeList: Render", employees)}
+    //     <h2>Employees</h2>
+    //         <button onClick={() => {history.push("/employees/create")}}>
+    //             Add Employee
+    //         </button>
+    //     {
+    //         employees.map(employee => {
+    //         return <EmployeeCard key={employee.id} employee={employee} />
+    //         })
+    //     }
+    //     </div>
+    // )
 }
 
